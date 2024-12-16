@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Authentication Project with Role-Based Access
+
+A modern authentication system built with Next.js 15, NextAuth.js v5, and Prisma, featuring role-based access control.
+
+## Features
+
+- 🔐 Authentication with NextAuth.js v5
+- 👥 Role-based access control (RBAC)
+- 🔑 Credential authentication (email/password)
+- 🌐 OAuth support (GitHub)
+- 🎨 Modern UI with Tailwind CSS
+- 🛡️ Type-safe with TypeScript
+- 🗄️ Prisma ORM with PostgreSQL
+
+## Prerequisites
+
+- Node.js 18+ 
+- PostgreSQL database
+- npm or yarn
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+3. Set up your environment variables:
+   ```env
+   DATABASE_URL="postgresql://..."
+   NEXTAUTH_SECRET="your-secret-key"
+   NEXTAUTH_URL="http://localhost:3000"
+   
+   # OAuth providers (optional)
+   GITHUB_ID="your-github-id"
+   GITHUB_SECRET="your-github-secret"
+   ```
+
+4. Run Prisma migrations:
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+## Project Structure
+
+```
+├── app/
+│   ├── api/
+│   │   └── auth/
+│   │       └── [...nextauth]/
+│   └── auth/
+│       ├── signin/
+│       └── signup/
+├── components/
+│   ├── ui/
+│   └── navbar.tsx
+├── lib/
+│   ├── prisma.ts
+│   └── zod.ts
+├── types/
+│   └── next-auth.d.ts
+├── auth.config.ts
+├── auth.ts
+└── middleware.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Authentication Flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Users can sign in using email/password or GitHub OAuth
+- JWT strategy is used for session management
+- Role-based access control is implemented through Prisma schema
+- Protected routes are handled via middleware
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Database Schema
 
-## Learn More
+The project uses a PostgreSQL database with the following main tables:
+- User
+- Role
+- RolesOnUsers (junction table for many-to-many relationship)
 
-To learn more about Next.js, take a look at the following resources:
+## Available Roles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- USER (default)
+- ADMIN
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Security Features
 
-## Deploy on Vercel
+- Password hashing with bcrypt
+- JWT-based sessions
+- Protected API routes
+- Type-safe authentication with TypeScript
+- Secure role-based access control
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To add new features or modify existing ones:
+
+1. Create a new branch
+2. Make your changes
+3. Run tests (if available)
+4. Submit a pull request
+
+## License
+
+MIT
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
